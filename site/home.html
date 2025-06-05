@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alimento Solidário</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f7fa;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    .sidebar {
+      width: 260px;
+      background-color: #5d5fee;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 20px;
+      border-top-right-radius: 20px;
+    }
+
+    .sidebar h1 {
+      font-size: 18px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .menu {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .menu-item,
+    .logout {
+      background-color: white;
+      color: #5d5fee;
+      border: none;
+      width: 100%;
+      height: 45px;
+      padding: 0 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .menu-item:hover,
+    .logout:hover {
+      background-color: #f0f0ff;
+    }
+
+    .menu-item.active {
+      background-color: white;
+      color: #5d5fee;
+    }
+
+    .menu-icon {
+      width: 15px;
+      height: 15px;
+    }
+
+    .logout {
+      background-color: #dcdcff;
+      margin-top: auto;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    section h3 {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      width: 180px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .card img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+    }
+
+    .card-info {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 130px;
+    }
+
+    .card-info strong {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .card-info p {
+      font-size: 12px;
+      color: #636e72;
+      margin-bottom: 10px;
+    }
+
+    .action-btn {
+      background-color: #8c8ffb;
+      color: white;
+      border: none;
+      padding: 8px 0;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      transition: background-color 0.3s;
+    }
+
+    .action-btn:hover {
+      background-color: #7377f0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <h1>Alimento Solidário</h1>
+
+      <nav class="menu">
+        <button class="menu-item active" onclick="location.href='home.html'">
+          <img src="assets/house-solid.png" alt="Início" class="menu-icon" />
+          Início
+        </button>
+        <button class="menu-item" onclick="location.href='realizar-doacao-produto.html'">
+          <img src="assets/handshake-angle-solid.png" alt="Doação" class="menu-icon" />
+          Realizar Doação
+        </button>
+      </nav>
+
+      <button class="logout" onclick="location.href='index.html'">
+        <img src="assets/arrow-right-from-bracket-solid.png" alt="Sair" class="menu-icon" />
+        Sair
+      </button>
+    </aside>
+
+    <main class="main-content">
+      <h2>Início</h2>
+
+      <section>
+        <h3>Solicitar Doações</h3>
+        <div class="cards">
+          <div class="card">
+              <img src="assets/map-ny.png" alt="Mapa">
+              <div class="card-info">
+                  <strong>Doação #01</strong>
+                  <p><i class="fa-solid fa-location-dot"></i> Localização aleatória</p>
+                  <button class="action-btn" onclick="solicitarDoacao(1)">Solicitar</button>
+              </div>
+          </div>
+          <div class="card">
+              <img src="assets/map-ny.png" alt="Mapa">
+              <div class="card-info">
+                  <strong>Doação #02</strong>
+                  <p><i class="fa-solid fa-location-dot"></i> Localização aleatória</p>
+                  <button class="action-btn" onclick="solicitarDoacao(2)">Solicitar</button>
+              </div>
+          </div>
+          <div class="card">
+              <img src="assets/map-ny.png" alt="Mapa">
+              <div class="card-info">
+                  <strong>Doação #03</strong>
+                  <p><i class="fa-solid fa-location-dot"></i> Localização aleatória</p>
+                  <button class="action-btn" onclick="solicitarDoacao(3)">Solicitar</button>
+              </div>
+          </div>
+          <div class="card">
+              <img src="assets/map-ny.png" alt="Mapa">
+              <div class="card-info">
+                  <strong>Doação #04</strong>
+                  <p><i class="fa-solid fa-location-dot"></i> Localização aleatória</p>
+                  <button class="action-btn" onclick="solicitarDoacao(4)">Solicitar</button>
+              </div>
+          </div>
+          <div class="card">
+              <img src="assets/map-ny.png" alt="Mapa">
+              <div class="card-info">
+                  <strong>Doação #05</strong>
+                  <p><i class="fa-solid fa-location-dot"></i> Localização aleatória</p>
+                  <button class="action-btn" onclick="solicitarDoacao(5)">Solicitar</button>
+              </div>
+          </div>
+          <div class="card">
+              <img src="assets/map-ny.png" alt="Mapa">
+              <div class="card-info">
+                  <strong>Doação #06</strong>
+                  <p><i class="fa-solid fa-location-dot"></i> Localização aleatória</p>
+                  <button class="action-btn" onclick="solicitarDoacao(6)">Solicitar</button>
+              </div>
+          </div>
+          <div class="card">
+              <img src="assets/map-ny.png" alt="Mapa">
+              <div class="card-info">
+                  <strong>Doação #07</strong>
+                  <p><i class="fa-solid fa-location-dot"></i> Localização aleatória</p>
+                  <button class="action-btn" onclick="solicitarDoacao(7)">Solicitar</button>
+              </div>
+          </div>
+      </div>
+      </section>
+
+      <section>
+        <h3>Doações Solicitadas</h3>
+        <div class="cards">
+          <div class="card">
+              <img src="assets/map-ny.png" alt="Mapa">
+              <div class="card-info">
+                  <strong>Doação #01</strong>
+                  <p><i class="fa-solid fa-location-dot"></i> Localização aleatória</p>
+                  <button class="action-btn" onclick="visualizarDoacao(1)">Visualizar</button>
+              </div>
+          </div>
+          <div class="card">
+              <img src="assets/map-ny.png" alt="Mapa">
+              <div class="card-info">
+                  <strong>Doação #02</strong>
+                  <p><i class="fa-solid fa-location-dot"></i> Localização aleatória</p>
+                  <button class="action-btn" onclick="visualizarDoacao(2)">Visualizar</button>
+              </div>
+          </div>
+          <div class="card">
+              <img src="assets/map-ny.png" alt="Mapa">
+              <div class="card-info">
+                  <strong>Doação #03</strong>
+                  <p><i class="fa-solid fa-location-dot"></i> Localização aleatória</p>
+                  <button class="action-btn" onclick="visualizarDoacao(3)">Visualizar</button>
+              </div>
+          </div>
+          <div class="card">
+              <img src="assets/map-ny.png" alt="Mapa">
+              <div class="card-info">
+                  <strong>Doação #04</strong>
+                  <p><i class="fa-solid fa-location-dot"></i> Localização aleatória</p>
+                  <button class="action-btn" onclick="visualizarDoacao(4)">Visualizar</button>
+              </div>
+          </div>
+      </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function solicitarDoacao(id) {
+        window.location.href = `solicitar-doacao.html?id=${id}`;
+    }
+
+    function visualizarDoacao(id) {
+        window.location.href = `visualizar-doacao.html?id=${id}`;
+    }
+    </script>
+</body>
+</html>
