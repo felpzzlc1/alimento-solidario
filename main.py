@@ -1,14 +1,11 @@
-from flask import Flask, request, jsonify
-import pymysql
-import os
+import flet as ft
 from dotenv import load_dotenv
+import os
+import pymysql
 
-# Carregar .env
+# Carrega .env
 load_dotenv()
 
-app = Flask(__name__)
-
-# Banco de dados
 def get_connection():
     return pymysql.connect(
         host=os.getenv('DB_HOST'),
@@ -18,57 +15,69 @@ def get_connection():
         cursorclass=pymysql.cursors.DictCursor
     )
 
-# Login
-@app.route('/usuarios', methods=['GET'])
-def login():
-    cpf = request.args.get('cpf')
-    senha = request.args.get('senha')
+def main(page: ft.Page):
+    page.title = "Alimento Solidário - Login e Cadastro"
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    
+    def exibir_mensagem(msg):
+        page.snack_bar = ft.SnackBar(ft.Text(msg))
+        page.snack_bar.open = True
+        page.update()
 
-    if not cpf or not senha:
-        return jsonify({'error': 'CPF e senha são obrigatórios'}), 400
+    def fazer_login(e):
+        try:
+            conn = get_connection()
+            with conn.cursor() as cursor:
+                cursor.execute("SELECT * FROM usuarios WHERE cpf=%s AND senha=%s", (cpf.value, senha.value))
+                result = cursor.fetchone()
+            conn.close()
 
-    try:
-        conn = get_connection()
-        with conn.cursor() as cursor:
-            cursor.execute("SELECT * FROM usuarios WHERE cpf=%s AND senha=%s", (cpf, senha))
-            result = cursor.fetchone()
-        conn.close()
+            if result:
+                exibir_mensagem("Login realizado com sucesso!")
+            else:
+                exibir_mensagem("CPF ou senha inválidos")
+        except Exception as err:
+            exibir_mensagem(f"Erro: {err}")
 
-        if not result:
-            return jsonify({'message': 'CPF ou senha inválidos'}), 401
+    def fazer_cadastro(e):
+        if not all([nome.value, cpf.value, data_nascimento.value, telefone.value, senha.value]):
+            exibir_mensagem("Preencha todos os campos!")
+            return
+        try:
+            conn = get_connection()
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    INSERT INTO usuarios (nome, cpf, data_nascimento, telefone, senha)
+                    VALUES (%s, %s, %s, %s, %s)
+                """, (nome.value, cpf.value, data_nascimento.value, telefone.value, senha.value))
+                conn.commit()
+            conn.close()
+            exibir_mensagem("Usuário cadastrado com sucesso!")
+        except Exception as err:
+            exibir_mensagem(f"Erro: {err}")
 
-        return jsonify({'message': 'Login realizado com sucesso', 'usuario': result})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+    nome = ft.TextField(label="Nome completo")
+    cpf = ft.TextField(label="CPF")
+    data_nascimento = ft.TextField(label="Data de nascimento", hint_text="AAAA-MM-DD")
+    telefone = ft.TextField(label="Telefone")
+    senha = ft.TextField(label="Senha", password=True, can_reveal_password=True)
 
-# Cadastro
-@app.route('/usuarios', methods=['POST'])
-def cadastrar():
-    data = request.json
-    required = ['nome', 'cpf', 'data_nascimento', 'telefone', 'senha']
+    btn_login = ft.ElevatedButton("Login", on_click=fazer_login)
+    btn_cadastro = ft.ElevatedButton("Cadastrar", on_click=fazer_cadastro)
 
-    if not all(k in data for k in required):
-        return jsonify({'error': 'Todos os campos são obrigatórios'}), 400
+    page.add(
+        ft.Column([
+            ft.Text("Alimento Solidário", size=30, weight=ft.FontWeight.BOLD),
+            nome,
+            cpf,
+            data_nascimento,
+            telefone,
+            senha,
+            ft.Row([btn_login, btn_cadastro], alignment=ft.MainAxisAlignment.CENTER),
+        ],
+        width=400,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER)
+    )
 
-    try:
-        conn = get_connection()
-        with conn.cursor() as cursor:
-            cursor.execute("""
-                INSERT INTO usuarios (nome, cpf, data_nascimento, telefone, senha)
-                VALUES (%s, %s, %s, %s, %s)
-            """, (
-                data['nome'], data['cpf'], data['data_nascimento'],
-                data['telefone'], data['senha']
-            ))
-            conn.commit()
-        conn.close()
-        return jsonify({'message': 'Usuário cadastrado com sucesso'}), 201
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-def main():
-    app.run(host='0.0.0.0', port=5000)
-
-
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    ft.app(target=main)
