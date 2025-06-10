@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from dotenv import load_dotenv
 import mysql.connector
 import os
@@ -18,7 +18,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "API rodando!"
+    return send_file("site/index.html")  # Serve o arquivo index.html
 
 @app.route("/usuarios", methods=["GET"])
 def login():
