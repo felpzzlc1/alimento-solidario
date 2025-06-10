@@ -2,9 +2,13 @@ name: Builds (APK)
 
 on:
   push:
-    branches: [master, main]
+    branches:
+      - master
+      - main
   pull_request:
-    branches: [master, main]
+    branches:
+      - master
+      - main
   workflow_dispatch:
 
 env:
@@ -50,7 +54,7 @@ jobs:
 
     - name: Prepara build do app
       run: |
-        flet build apk --verbose \
+        python -m flet build apk --verbose \
           --build-number=${{ env.BUILD_NUMBER }} \
           --build-version=${{ env.BUILD_VERSION }} \
           --include-packages certifi
