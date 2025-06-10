@@ -29,7 +29,10 @@ jobs:
       - name: Install Python Dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install flet certifi
+          pip install flet certifi
+
+      - name: Add Flet CLI to PATH
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Setup Flutter ${{ env.FLUTTER_VERSION }}
         uses: subosito/flutter-action@v2
@@ -50,7 +53,7 @@ jobs:
 
       - name: Prepara build do app
         run: |
-          python -m flet build apk --verbose \
+          flet build apk --verbose \
             --build-number=${{ env.BUILD_NUMBER }} \
             --build-version=${{ env.BUILD_VERSION }} \
             --include-packages certifi
