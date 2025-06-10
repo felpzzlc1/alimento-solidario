@@ -1,5 +1,7 @@
-def main():
-    print("Deploy simulado com sucesso!")
+import flet as ft
 
-if __name__ == "__main__":
-    main()
+def main(page: ft.Page):
+    page.title = "Alimento Solidário"
+    page.add(ft.Text("Bem-vindo ao Alimento Solidário!"))
+
+ft.app(target=main) 
