@@ -50,7 +50,6 @@ jobs:
 
     - name: Prepara build do app
       run: |
-        flet clean || true
         flet build apk --verbose \
           --build-number=${{ env.BUILD_NUMBER }} \
           --build-version=${{ env.BUILD_VERSION }} \
