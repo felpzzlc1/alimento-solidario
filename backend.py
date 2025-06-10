@@ -37,7 +37,7 @@ def visualizar_doacao_page():
     return send_file("site/visualizar-doacao.html")
 
 @app.route("/solicitar-doacao.html")
-def visualizar_doacao_page():
+def solicitar_doacao_page():
     return send_file("site/solicitar-doacao.html")
 
 @app.route("/realizar-doacao.html")
@@ -45,11 +45,11 @@ def realizar_doacao_page():
     return send_file("site/realizar-doacao.html")
 
 @app.route("/realizar-doacao-produto.html")
-def realizar_doacao_produto_page():
+def realizar_doacao_produto():
     return send_file("site/realizar-doacao-produto.html")
 
 @app.route("/realizar-doacao-produto-tipo.html")
-def realizar_doacao_produto_page():
+def realizar_doacao_produto_tipo():
     return send_file("site/realizar-doacao-produto-tipo.html")
 
 @app.route("/usuarios", methods=["GET"])
