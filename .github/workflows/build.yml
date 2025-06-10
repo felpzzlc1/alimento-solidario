@@ -63,3 +63,7 @@ jobs:
         path: build/apk
         if-no-files-found: warn
         overwrite: false
+
+    - name: Run Backend
+      run: |
+        flet run backend.py --port 80
