@@ -54,7 +54,6 @@ jobs:
 
     - name: Prepara build do app
       run: |
-        flet clean
         flet build init --template gh:flet-dev/flet-build-template@0.28.3
         flet build app
 
