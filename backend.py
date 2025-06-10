@@ -1,9 +1,11 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify, send_file, send_from_directory
 from dotenv import load_dotenv
 import mysql.connector
 import os
 
 load_dotenv()
+
+app = Flask(__name__, static_folder="site/assets")
 
 def get_db_connection():
     return mysql.connector.connect(
@@ -14,11 +16,13 @@ def get_db_connection():
         port=int(os.getenv("DB_PORT", 3306))
     )
 
-app = Flask(__name__)
-
 @app.route("/")
 def home():
-    return send_file("site/index.html")  # Serve o arquivo index.html
+    return send_file("site/index.html")
+
+@app.route("/assets/<path:filename>")
+def assets(filename):
+    return send_from_directory("site/assets", filename)
 
 @app.route("/usuarios", methods=["GET"])
 def login():
