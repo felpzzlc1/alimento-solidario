@@ -52,6 +52,10 @@ def realizar_doacao_produto():
 def realizar_doacao_produto_tipo():
     return send_file("site/realizar-doacao-produto-tipo.html")
 
+@app.route("/index.html")
+def index_page():
+    return send_file("site/index.html")
+
 @app.route("/usuarios", methods=["GET"])
 def login():
     cpf = request.args.get("cpf")

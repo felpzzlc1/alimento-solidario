@@ -46,6 +46,12 @@ jobs:
         distribution: 'temurin'
         java-version: '21'
 
+    - name: Accept Android Licenses
+      run: yes | flutter doctor --android-licenses
+
+    - name: Run Flutter Doctor
+      run: flutter doctor -v
+
     - name: Build APK using Flet
       run: |
         flutter config --no-analytics
@@ -55,4 +61,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: apk-build-artifact
-        path: build/app/outputs/flutter-apk/
+        path: "**/*.apk"
