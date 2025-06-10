@@ -24,6 +24,18 @@ def home():
 def assets(filename):
     return send_from_directory("site/assets", filename)
 
+@app.route("/login.html")
+def login_page():
+    return send_file("site/login.html")
+
+@app.route("/home.html")
+def home_page():
+    return send_file("site/home.html")
+
+@app.route("/visualizar-doacao.html")
+def visualizar_doacao_page():
+    return send_file("site/visualizar-doacao.html")
+
 @app.route("/usuarios", methods=["GET"])
 def login():
     cpf = request.args.get("cpf")
