@@ -1,7 +1,7 @@
-import flet as ft
+from flask import Flask, request, jsonify
+from dotenv import load_dotenv
 import mysql.connector
 import os
-from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -11,50 +11,53 @@ def get_db_connection():
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASSWORD"),
         database=os.getenv("DB_NAME"),
-        port=os.getenv("DB_PORT", 3306)
+        port=int(os.getenv("DB_PORT", 3306))
     )
 
-def main(page: ft.Page):
-    page.title = "Alimento Solidário API"
-    page.add(ft.Text("API rodando!"))
+app = Flask(__name__)
 
-    @page.route("/usuarios", methods=["GET"])
-    def login(req):
-        cpf = req.query.get("cpf")
-        senha = req.query.get("senha")
-        if not cpf or not senha:
-            return ft.Response(400, {"error": "CPF e senha são obrigatórios"})
-        try:
-            conn = get_db_connection()
-            cursor = conn.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM usuarios WHERE cpf=%s AND senha=%s", (cpf, senha))
-            user = cursor.fetchone()
-            cursor.close()
-            conn.close()
-            if not user:
-                return ft.Response(401, {"message": "CPF ou senha inválidos"})
-            return ft.Response(200, {"message": "Login realizado com sucesso", "usuario": user})
-        except Exception as e:
-            return ft.Response(500, {"error": str(e)})
+@app.route("/")
+def home():
+    return "API rodando!"
 
-    @page.route("/usuarios", methods=["POST"])
-    def cadastro(req):
-        data = req.json
-        campos = ["nome", "cpf", "data_nascimento", "telefone", "senha"]
-        if not all(data.get(c) for c in campos):
-            return ft.Response(400, {"error": "Todos os campos são obrigatórios"})
-        try:
-            conn = get_db_connection()
-            cursor = conn.cursor()
-            cursor.execute(
-                "INSERT INTO usuarios (nome, cpf, data_nascimento, telefone, senha) VALUES (%s, %s, %s, %s, %s)",
-                (data["nome"], data["cpf"], data["data_nascimento"], data["telefone"], data["senha"])
-            )
-            conn.commit()
-            cursor.close()
-            conn.close()
-            return ft.Response(201, {"message": "Usuário cadastrado com sucesso"})
-        except Exception as e:
-            return ft.Response(500, {"error": "Erro ao cadastrar usuário: " + str(e)})
+@app.route("/usuarios", methods=["GET"])
+def login():
+    cpf = request.args.get("cpf")
+    senha = request.args.get("senha")
+    if not cpf or not senha:
+        return jsonify({"error": "CPF e senha são obrigatórios"}), 400
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM usuarios WHERE cpf=%s AND senha=%s", (cpf, senha))
+        user = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        if not user:
+            return jsonify({"message": "CPF ou senha inválidos"}), 401
+        return jsonify({"message": "Login realizado com sucesso", "usuario": user}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-ft.app(target=main, port=80)
+@app.route("/usuarios", methods=["POST"])
+def cadastro():
+    data = request.get_json()
+    campos = ["nome", "cpf", "data_nascimento", "telefone", "senha"]
+    if not all(data.get(c) for c in campos):
+        return jsonify({"error": "Todos os campos são obrigatórios"}), 400
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT INTO usuarios (nome, cpf, data_nascimento, telefone, senha) VALUES (%s, %s, %s, %s, %s)",
+            (data["nome"], data["cpf"], data["data_nascimento"], data["telefone"], data["senha"])
+        )
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return jsonify({"message": "Usuário cadastrado com sucesso"}), 201
+    except Exception as e:
+        return jsonify({"error": "Erro ao cadastrar usuário: " + str(e)}), 500
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=80)
