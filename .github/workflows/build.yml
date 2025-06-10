@@ -54,7 +54,7 @@ jobs:
     - name: Prepara build do app
       run: |
         flet clean || true
-        flet build apk --verbose --build-number=${{ env.BUILD_NUMBER }} --build-version=${{ env.BUILD_VERSION }}
+        flet build apk --verbose --build-number=${{ env.BUILD_NUMBER }} --build-version=${{ env.BUILD_VERSION }} --include-packages flask,mysql.connector,python_dotenv,certifi
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
