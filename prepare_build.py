@@ -4,6 +4,7 @@ import subprocess
 
 def prepare_build():
     subprocess.run(["pip", "install", "-r", "requirements.txt", "--target", "libs"], check=True)
+    subprocess.run(["pip", "install", "flet", "--target", "libs"], check=True)
 
     if not os.path.exists("libs"):
         os.makedirs("libs")
