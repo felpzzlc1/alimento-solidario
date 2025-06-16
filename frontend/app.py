@@ -34,5 +34,9 @@ def solicitar_doacao():
 def visualizar_doacao():
     return render_template("visualizar-doacao.html")
 
+@app.route("/logout")
+def logout():
+    return render_template("index.html")
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=3000)
