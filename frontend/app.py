@@ -10,6 +10,10 @@ def index():
 def login():
     return render_template("login.html")
 
+@app.route("/cadastro.html")
+def cadastro():
+    return render_template("cadastro.html")
+
 @app.route("/home.html")
 def home():
     return render_template("home.html")
