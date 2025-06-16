@@ -113,7 +113,7 @@
         <button class="submit-btn" onclick="location.href='home.html'">Enviar pedido de doação</button>
       </div>
 
-      <img src="/frontend/static/map-curitiba.png" alt="Mapa Curitiba" class="map-preview">
+      <img src="{{ url_for('static', filename='map-curitiba.png') }}" alt="Mapa Curitiba" class="map-preview">
     </div>
   </div>
 </body>

@@ -69,11 +69,11 @@
 
   <div class="options">
     <div class="option" onclick="selecionarTipo('roupa')">
-      <img src="/frontend/static/shirt-solid.png" alt="Roupas" />
+      <img src="{{ url_for('static', filename='shirt-solid.png') }}" alt="Roupas" />
       <span class="option-label">Roupas</span>
     </div>
     <div class="option" onclick="selecionarTipo('produto')">
-      <img src="/frontend/static/cart-shopping-solid.png" alt="Produtos" />
+      <img src="{{ url_for('static', filename='cart-shopping-solid.png') }}" alt="Produtos" />
       <span class="option-label">Produtos</span>
     </div>
   </div>

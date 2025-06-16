@@ -137,17 +137,17 @@
     <p class="subtext">Visualizar a Doação de um Produto</p>
 
     <div class="image-row">
-      <img src="/frontend/static/cestas.png" alt="Imagem da Doação">
-      <img src="/frontend/static/map-dark.png" alt="Mapa da Localização">
+      <img src="{{ url_for('static', filename='cestas.png') }}" alt="Imagem da Doação">
+      <img src="{{ url_for('static', filename='map-dark.png') }}" alt="Mapa da Localização">
     </div>
 
     <div class="info">
       <div class="info-item">
-        <img src="/frontend/static/user-solid.png" alt="Ícone localização">
+        <img src="{{ url_for('static', filename='user-solid.png') }}" alt="Ícone localização">
         <span><strong>Endereço da doação</strong></span>
       </div>
       <div class="info-item">
-        <img src="/frontend/static/vector.png" alt="Ícone autor">
+        <img src="{{ url_for('static', filename='vector.png') }}" alt="Ícone autor">
         <span>autor da doação</span>
       </div>
     </div>
