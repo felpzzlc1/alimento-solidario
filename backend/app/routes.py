@@ -3,7 +3,7 @@ from .database import get_db_connection
 
 api = Blueprint('api', __name__)
 
-# Rota de login
+# Login
 @api.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
@@ -28,7 +28,7 @@ def login():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Rota de cadastro de usuário
+# Cadastro de usuário
 @api.route("/cadastro", methods=["POST"])
 def cadastro():
     data = request.get_json()
