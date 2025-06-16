@@ -6,7 +6,7 @@ api = Blueprint('api', __name__)
 # Rotas de arquivos estáticos
 @api.route("/")
 def home():
-    return send_file("site/index.html")
+    return send_file("frontend/templates/index.html")
 
 # ... outras rotas de arquivos estáticos ...
 
