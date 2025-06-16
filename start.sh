@@ -1,15 +1,11 @@
 #!/bin/bash
 
-# Iniciar backend
 cd backend
-sudo python3 run.py &
+python3 run.py &
 
-# Aguardar backend iniciar
-sleep 5
+sleep 3
 
-# Iniciar frontend
 cd ../frontend
-python3 main.py &
+python3 app.py &
 
-# Manter script rodando
 wait
