@@ -105,7 +105,7 @@
       };
 
       try {
-        const response = await fetch('/usuarios', {
+        const response = await fetch('http://54.233.212.218:5000/api/cadastro', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(dados)

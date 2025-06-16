@@ -121,28 +121,32 @@
   </div>
 
   <script>
-    const form = document.getElementById('login-form');
+  const form = document.getElementById('login-form');
 
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-      const cpf = document.getElementById('cpf').value;
-      const senha = document.getElementById('senha').value;
+    const cpf = document.getElementById('cpf').value;
+    const senha = document.getElementById('senha').value;
 
-      try {
-        const response = await fetch(`/usuarios?cpf=${encodeURIComponent(cpf)}&senha=${encodeURIComponent(senha)}`);
-        const data = await response.json();
+    try {
+      const response = await fetch('http://54.233.212.218:5000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cpf: cpf, password: senha })
+      });
+      const data = await response.json();
 
-        if (response.ok) {
-          alert(data.message);
-          window.location.href = "home.html";
-        } else {
-          alert(data.message || 'Erro ao fazer login');
-        }
-      } catch (error) {
-        alert('Erro ao conectar com o servidor');
+      if (response.ok) {
+        alert(data.message);
+        window.location.href = "home.html";
+      } else {
+        alert(data.error || 'Erro ao fazer login');
       }
-    });
+    } catch (error) {
+      alert('Erro ao conectar com o servidor');
+    }
+  });
   </script>
 </body>
 </html>
