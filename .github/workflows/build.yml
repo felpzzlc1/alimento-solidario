@@ -15,7 +15,6 @@ env:
   BUILD_NUMBER: 1
   BUILD_VERSION: 1.0.0
   PYTHON_VERSION: 3.12.2
-  FLUTTER_VERSION: 3.22.2
 
 jobs:
   build-apk:
@@ -35,26 +34,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install flet
         pip install -r requirements.txt
-
-    - name: Prepare Build
-      run: python prepare_build.py
-
-    - name: Setup Flutter ${{ env.FLUTTER_VERSION }}
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: ${{ env.FLUTTER_VERSION }}
-
-    - name: Setup Java JDK
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: '21'
-
-    - name: Accept Android Licenses
-      run: yes | flutter doctor --android-licenses
-
-    - name: Run Flutter Doctor
-      run: flutter doctor -v
 
     - name: Build APK
       run: |
