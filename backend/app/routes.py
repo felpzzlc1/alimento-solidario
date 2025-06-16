@@ -4,19 +4,21 @@ import os
 
 api = Blueprint('api', __name__)
 
-# Definir o caminho base do projeto
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FRONTEND_DIR = os.path.join(BASE_DIR, '..', 'frontend')  # Subir um nível adicional
+# Definir o caminho base do projeto (agora apontando para /home/ec2-user/api-mysql)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+FRONTEND_DIR = os.path.join(BASE_DIR, 'frontend')
 
-# Rotas de arquivos estáticos
 @api.route("/")
 def home():
     try:
         template_path = os.path.join(FRONTEND_DIR, "templates", "index.html")
+        print(f"Tentando acessar o template em: {template_path}")  # Debug
+        
         if not os.path.exists(template_path):
             return jsonify({
                 "error": f"Template não encontrado em: {template_path}"
             }), 404
+            
         return send_file(template_path)
     except Exception as e:
         return jsonify({
@@ -24,7 +26,6 @@ def home():
             "path": template_path
         }), 500
 
-# Rota para servir arquivos estáticos
 @api.route('/static/<path:filename>')
 def serve_static(filename):
     return send_from_directory(os.path.join(FRONTEND_DIR, 'static'), filename)
