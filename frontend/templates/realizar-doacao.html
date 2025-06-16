@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Realizar Doação - Alimento Solidário</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 60px 20px 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: white;
+      text-align: center;
+    }
+
+    .container {
+      padding: 0 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: #6c5ce7;
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 20px;
+      color: #2d3436;
+      margin-bottom: 5px;
+    }
+
+    .subtext {
+      font-size: 12px;
+      color: #636e72;
+      margin-bottom: 30px;
+    }
+
+    .form-section {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .form-left {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 320px;
+    }
+
+    .form-left label {
+      font-size: 10px;
+      text-align: left;
+      color: #6c5ce7;
+      margin-bottom: -6px;
+      margin-top: 6px;
+    }
+
+    .form-left input {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1.5px solid #aab2ff;
+      font-size: 14px;
+    }
+
+    .submit-btn {
+      margin-top: 12px;
+      background-color: #aab2ff;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      width: 100%;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color: #919aff;
+    }
+
+    .map-preview {
+      width: 380px;
+      border-radius: 12px;
+      object-fit: cover;
+      height: 100%;
+      align-self: stretch;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Alimento Solidário</h1>
+    <h2>Insira o local de retirada</h2>
+    <p class="subtext">Etapa 2 de 2</p>
+
+    <div class="form-section">
+      <div class="form-left">
+        <label for="rua">Rua</label>
+        <input id="rua" type="text" placeholder="Rua">
+
+        <label for="bairro">Bairro</label>
+        <input id="bairro" type="text" placeholder="Bairro">
+
+        <label for="complemento">Complemento</label>
+        <input id="complemento" type="text" placeholder="Complemento">
+
+        <button class="submit-btn" onclick="location.href='home.html'">Enviar pedido de doação</button>
+      </div>
+
+      <img src="/frontend/static/map-curitiba.png" alt="Mapa Curitiba" class="map-preview">
+    </div>
+  </div>
+</body>
+</html>
