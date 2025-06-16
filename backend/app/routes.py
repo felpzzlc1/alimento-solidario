@@ -4,23 +4,31 @@ import os
 
 api = Blueprint('api', __name__)
 
-# Definir o caminho base do projeto (agora apontando para /home/ec2-user/api-mysql)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-FRONTEND_DIR = os.path.join(BASE_DIR, 'frontend')
+# Corrigindo o caminho base do projeto
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Remove um dirname
+PROJECT_ROOT = os.path.dirname(BASE_DIR)  # Sobe um nível para chegar na raiz do projeto
+FRONTEND_DIR = os.path.join(PROJECT_ROOT, 'frontend')
 
 @api.route("/")
 def home():
     try:
+        # Adicionando logs para debug
+        print(f"BASE_DIR: {BASE_DIR}")
+        print(f"PROJECT_ROOT: {PROJECT_ROOT}")
+        print(f"FRONTEND_DIR: {FRONTEND_DIR}")
+        
         template_path = os.path.join(FRONTEND_DIR, "templates", "index.html")
-        print(f"Tentando acessar o template em: {template_path}")  # Debug
+        print(f"Tentando acessar o template em: {template_path}")
         
         if not os.path.exists(template_path):
+            print(f"Arquivo não encontrado em: {template_path}")
             return jsonify({
                 "error": f"Template não encontrado em: {template_path}"
             }), 404
             
         return send_file(template_path)
     except Exception as e:
+        print(f"Erro ao carregar template: {str(e)}")
         return jsonify({
             "error": f"Erro ao carregar template: {str(e)}",
             "path": template_path
