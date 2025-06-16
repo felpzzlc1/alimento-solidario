@@ -5,13 +5,24 @@ import os
 api = Blueprint('api', __name__)
 
 # Definir o caminho base do projeto
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-FRONTEND_DIR = os.path.join(BASE_DIR, 'frontend')
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FRONTEND_DIR = os.path.join(BASE_DIR, '..', 'frontend')  # Subir um nível adicional
 
 # Rotas de arquivos estáticos
 @api.route("/")
 def home():
-    return send_file(os.path.join(FRONTEND_DIR, "templates", "index.html"))
+    try:
+        template_path = os.path.join(FRONTEND_DIR, "templates", "index.html")
+        if not os.path.exists(template_path):
+            return jsonify({
+                "error": f"Template não encontrado em: {template_path}"
+            }), 404
+        return send_file(template_path)
+    except Exception as e:
+        return jsonify({
+            "error": f"Erro ao carregar template: {str(e)}",
+            "path": template_path
+        }), 500
 
 # Rota para servir arquivos estáticos
 @api.route('/static/<path:filename>')
