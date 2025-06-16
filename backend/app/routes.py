@@ -4,7 +4,7 @@ from .database import get_db_connection
 api = Blueprint('api', __name__)
 
 # Rota de login
-@api.route("/auth/login", methods=["POST"])
+@api.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
     if not data:
@@ -29,7 +29,7 @@ def login():
         return jsonify({"error": str(e)}), 500
 
 # Rota de cadastro de usuário
-@api.route("/users", methods=["POST"])
+@api.route("/cadastro", methods=["POST"])
 def cadastro():
     data = request.get_json()
     if not data:
