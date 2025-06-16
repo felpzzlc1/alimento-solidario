@@ -1,14 +1,22 @@
 from flask import Blueprint, request, jsonify, send_file, send_from_directory
 from .database import get_db_connection
+import os
 
 api = Blueprint('api', __name__)
+
+# Definir o caminho base do projeto
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+FRONTEND_DIR = os.path.join(BASE_DIR, 'frontend')
 
 # Rotas de arquivos estáticos
 @api.route("/")
 def home():
-    return send_file("frontend/templates/index.html")
+    return send_file(os.path.join(FRONTEND_DIR, "templates", "index.html"))
 
-# ... outras rotas de arquivos estáticos ...
+# Rota para servir arquivos estáticos
+@api.route('/static/<path:filename>')
+def serve_static(filename):
+    return send_from_directory(os.path.join(FRONTEND_DIR, 'static'), filename)
 
 @api.route("/auth/login", methods=["POST"])  # Novo endpoint
 def login():
