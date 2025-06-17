@@ -36,9 +36,15 @@ jobs:
         pip install pyinstaller
         pip install -r requirements.txt
 
+    - name: Create assets directory
+      run: |
+        mkdir -p mobile/assets
+        cp -r frontend/static/* mobile/assets/
+
     - name: Build APK
       run: |
-        flet pack mobile/main.py --verbose
+        cd mobile
+        flet pack main.py --verbose
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
