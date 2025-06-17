@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tipo de Doação - Alimento Solidário</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    h1 {
+      color: #6c5ce7;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 18px;
+      color: #2d3436;
+      margin-bottom: 6px;
+    }
+
+    .subtext {
+      font-size: 12px;
+      color: #636e72;
+      margin-bottom: 30px;
+    }
+
+    select {
+      padding: 10px;
+      border: 2px solid #c7c6ff;
+      border-radius: 8px;
+      font-size: 14px;
+      width: 250px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      background-color: #c7c6ff;
+      color: #5d5fee;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 30px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #b0afff;
+    }
+  </style>
+</head>
+<body>
+  <h1>Alimento Solidário</h1>
+  <h2>Indique o tipo de <span id="tipo-label">produto</span></h2>
+  <p class="subtext">Etapa 1 de 2</p>
+
+  <select id="opcao-select">
+    <option disabled selected>Selecione uma opção</option>
+  </select>
+
+  <br><br>
+  <button class="btn" onclick="proximaEtapa()">Próxima Etapa</button>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const tipo = params.get("tipo") || "produto";
+
+    const tipoLabel = document.getElementById("tipo-label");
+    const select = document.getElementById("opcao-select");
+
+    const opcoes = {
+      roupa: ["Agasalho de Inverno", "Agasalho de Verão"],
+      produto: ["Cesta Básica", "Alimentos"]
+    };
+
+    tipoLabel.textContent = tipo === "roupa" ? "roupa" : "produto";
+
+    opcoes[tipo].forEach(item => {
+      const option = document.createElement("option");
+      option.value = item;
+      option.textContent = item;
+      select.appendChild(option);
+    });
+
+    function proximaEtapa() {
+      const valorSelecionado = select.value;
+      if (!valorSelecionado || valorSelecionado === "Selecione uma opção") {
+        alert("Por favor, selecione uma opção.");
+        return;
+      }
+
+      window.location.href = `realizar-doacao.html?tipo=${encodeURIComponent(tipo)}&item=${encodeURIComponent(valorSelecionado)}`;
+    }
+  </script>
+</body>
+</html> 

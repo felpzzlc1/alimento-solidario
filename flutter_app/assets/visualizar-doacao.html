@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detalhes da Doação - Alimento Solidário</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f7fa;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .header {
+      background-color: #5d5fee;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header h1 {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .back-button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 40px;
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .detail-item {
+      margin-bottom: 15px;
+    }
+
+    .detail-item strong {
+      display: block;
+      font-size: 16px;
+      color: #5d5fee;
+      margin-bottom: 5px;
+    }
+
+    .detail-item p {
+      font-size: 14px;
+      color: #636e72;
+      margin: 0;
+    }
+
+    .map-container {
+      width: 100%;
+      height: 300px;
+      margin-top: 25px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .map-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .action-buttons button {
+      background-color: #6c5ce7;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .action-buttons button:hover {
+      background-color: #5a4cd1;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <button class="back-button" onclick="window.history.back()">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+    <h1>Detalhes da Doação</h1>
+    <div></div> <!-- Para alinhar o título ao centro -->
+  </div>
+
+  <main class="main-content">
+    <h2>Doação #<span id="donation-id"></span></h2>
+
+    <div class="detail-item">
+      <strong>Tipo:</strong>
+      <p id="donation-type">Carregando...</p>
+    </div>
+
+    <div class="detail-item">
+      <strong>Data da Doação:</strong>
+      <p id="donation-date">Carregando...</p>
+    </div>
+
+    <div class="detail-item">
+      <strong>Localização:</strong>
+      <p id="donation-location">Carregando...</p>
+    </div>
+
+    <div class="map-container">
+      <img id="map-image" src="map-curitiba.png" alt="Mapa da Localização">
+    </div>
+
+    <div class="action-buttons">
+      <button onclick="confirmarRecebimento()">Confirmar Recebimento</button>
+      <button onclick="cancelarDoacao()">Cancelar Doação</button>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const donationId = urlParams.get('id');
+      document.getElementById('donation-id').innerText = donationId;
+
+      // Simulação de carregamento de dados
+      setTimeout(() => {
+        document.getElementById('donation-type').innerText = 'Cesta Básica';
+        document.getElementById('donation-date').innerText = '01/01/2023 - 10:00';
+        document.getElementById('donation-location').innerText = 'Rua da Doação, 123 - Curitiba';
+        // O ideal seria carregar a imagem do mapa dinamicamente de acordo com a localização
+        // document.getElementById('map-image').src = 'mapa_da_doacao.png';
+      }, 500);
+    });
+
+    function confirmarRecebimento() {
+      const donationId = document.getElementById('donation-id').innerText;
+      alert('Confirmação de recebimento para Doação #' + donationId);
+      // Requisição ao backend para confirmar recebimento
+      // fetch(`http://54.233.212.218:5000/api/doacao/${donationId}/confirmar`, { method: 'POST' });
+      window.history.back();
+    }
+
+    function cancelarDoacao() {
+      const donationId = document.getElementById('donation-id').innerText;
+      alert('Cancelamento de Doação #' + donationId);
+      // Requisição ao backend para cancelar doação
+      // fetch(`http://54.233.212.218:5000/api/doacao/${donationId}/cancelar`, { method: 'POST' });
+      window.history.back();
+    }
+  </script>
+</body>
+</html> 

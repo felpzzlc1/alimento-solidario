@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Realizar Doação - Alimento Solidário</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 60px 20px 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: white;
+      text-align: center;
+    }
+
+    h1 {
+      color: #6c5ce7;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .subtext {
+      font-size: 14px;
+      color: #636e72;
+      margin-bottom: 40px;
+    }
+
+    .options {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .option {
+      background-color: #dcdde1;
+      border-radius: 12px;
+      padding: 30px;
+      width: 160px;
+      height: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .option:hover {
+      background-color: #cfd0d4;
+    }
+
+    .option img {
+      width: 90px;
+      height: 80px;
+      margin-bottom: 10px;
+    }
+
+    .option-label {
+      font-size: 15px;
+      font-weight: bold;
+      color: #5d5fee;
+    }
+  </style>
+</head>
+<body>
+  <h1>Alimento Solidário</h1>
+  <p class="subtext">Antes de tudo, o que você vai doar?<br>Selecione uma opção abaixo:</p>
+
+  <div class="options">
+    <div class="option" onclick="selecionarTipo('roupa')">
+      <img src="shirt-solid.png" alt="Roupas" />
+      <span class="option-label">Roupas</span>
+    </div>
+    <div class="option" onclick="selecionarTipo('produto')">
+      <img src="cart-shopping-solid.png" alt="Produtos" />
+      <span class="option-label">Produtos</span>
+    </div>
+  </div>
+
+  <script>
+    function selecionarTipo(tipo) {
+      window.location.href = `realizar-doacao-produto-tipo.html?tipo=${encodeURIComponent(tipo)}`;
+    }
+  </script>
+</body>
+</html> 
